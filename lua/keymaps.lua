@@ -45,4 +45,19 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+-- Function to return current buffer path
+local function get_current_buffer_path()
+  local path = vim.fn.expand('%'):match '(.*/)'
+  if path == nil then
+    path = '.'
+  end
+  return path
+end
+-- open oil in current buffer path
+vim.keymap.set('n', '<leader>pv', function()
+  vim.cmd('Oil ' .. get_current_buffer_path())
+end)
+vim.keymap.set('n', '<leader>q', '<cmd>bw<CR>')
+vim.keymap.set('n', '<leader>f', vim.lsp.buf.format, {})
+
 -- vim: ts=2 sts=2 sw=2 et
